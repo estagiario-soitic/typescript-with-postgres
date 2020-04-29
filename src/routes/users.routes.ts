@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { hash } from 'bcryptjs';
 import CreateUserServices from '../services/CreateUserService';
 
 const usersRouter = Router();
@@ -10,12 +9,10 @@ usersRouter.post('/', async (request, response) => {
 
         const createUser = new CreateUserServices();
 
-        const hashedPassword = await hash(password, 8);
-
         const user = await createUser.execute({
             name,
             email,
-            password: hashedPassword,
+            password,
         });
 
         delete user.password;
